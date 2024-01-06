@@ -1,0 +1,37 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: openapi server
+  license:
+    name: MIT
+servers:
+  - url: http://localhost:8080
+paths:
+  /okaserver:
+    get:
+      summary: get oka info
+      operationId: getokainfo
+      tags:
+        - okaserver
+          #      parameters:
+          #        - name: okaid
+          #          in: query
+          #          description: query target employee id
+          #          required: true
+          #          schema:
+          #            type: string
+      responses:
+        '200':
+          description: return oka information
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/okaserver"
+components:
+  schemas:
+    okaserver:
+      required:
+        - id
+      properties:
+        id:
+          type: string
