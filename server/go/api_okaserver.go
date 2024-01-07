@@ -58,6 +58,7 @@ func (c *OkaserverAPIController) Routes() Routes {
 
 // Getokainfo - get oka info
 func (c *OkaserverAPIController) Getokainfo(w http.ResponseWriter, r *http.Request) {
+	// oka Change start 2024/01/07
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 
@@ -67,6 +68,7 @@ func (c *OkaserverAPIController) Getokainfo(w http.ResponseWriter, r *http.Reque
 		Id: "okash",
 	}
 	json.NewEncoder(w).Encode(okainfo)
+	// oka Change end 2024/01/07
 
 	/*
 		result, err := c.service.Getokainfo(r.Context())
