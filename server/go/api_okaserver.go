@@ -13,13 +13,11 @@ import (
 	"encoding/json"
 	"net/http"
 	"strings"
-
-	"github.com/gorilla/mux"
 )
 
 // OkaserverAPIController binds http requests to an api service and writes the service results to the http response
 type OkaserverAPIController struct {
-	service OkaserverAPIServicer
+	service      OkaserverAPIServicer
 	errorHandler ErrorHandler
 }
 
@@ -60,12 +58,24 @@ func (c *OkaserverAPIController) Routes() Routes {
 
 // Getokainfo - get oka info
 func (c *OkaserverAPIController) Getokainfo(w http.ResponseWriter, r *http.Request) {
-	result, err := c.service.Getokainfo(r.Context())
-	// If an error occurred, encode the error with the status code
-	if err != nil {
-		c.errorHandler(w, r, err, &result)
-		return
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.WriteHeader(http.StatusOK)
+
+	//employeeID := r.URL.Query()["employeeId"]
+
+	okainfo := Okaserver{
+		Id: "okash",
 	}
-	// If no error, encode the body and the result code
-	EncodeJSONResponse(result.Body, &result.Code, w)
+	json.NewEncoder(w).Encode(okainfo)
+
+	/*
+		result, err := c.service.Getokainfo(r.Context())
+		// If an error occurred, encode the error with the status code
+		if err != nil {
+			c.errorHandler(w, r, err, &result)
+			return
+		}
+		// If no error, encode the body and the result code
+		EncodeJSONResponse(result.Body, &result.Code, w)
+	*/
 }
